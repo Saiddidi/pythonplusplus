@@ -1,4 +1,3 @@
-
 name: Publish to PyPI
 
 on:
@@ -9,8 +8,14 @@ jobs:
   pypi-publish:
     name: Build and publish to PyPI
     runs-on: ubuntu-latest
+    
+    # تحديد البيئة لربطها بـ PyPI (تأكد من كتابة pypi في موقع PyPI أيضاً)
+    environment:
+      name: pypi
+      url: https://pypi.org/p/said-pythonplusplus  # يمكنك استبدال الجزء الأخير باسم حزمتك الجديد
+
     permissions:
-      # هذه الصلاحية ضرورية جداً لاستخدام ميزة Trusted Publishers بدون كلمة مرور
+      # هذه الصلاحية ضرورية جداً لاستخدام ميزة Trusted Publishers وتوليد الـ OpenID Connect (OIDC) token
       id-token: write
       contents: read
 
@@ -34,6 +39,3 @@ jobs:
 
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        # هنا يتم تحديد البيئة التي ربطناها في PyPI
-        environment-name: pypi
